@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>jQuery Numpad - jQuery Mobile Demo</title>
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<link rel="stylesheet" href="../../jquery.numpad.css">
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+		<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script src="../../jquery.numpad.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<script>
+			$(document).on('pageshow', function(){
+				$('#text-basic').numpad({
+					gridTableClass: 'ui-bar-a',
+					backgroundTpl: '<div class="ui-popup-screen ui-overlay-a"></div>',
+					displayTpl: '<input data-theme="b" type="text" />',
+					buttonNumberTpl: '<a data-role="button" data-theme="b">4</a>',
+					buttonFunctionTpl: '<a data-role="button" data-theme="a">4</a>'
+				});
+				$('#numpad4div').numpad({
+					gridTableClass: 'ui-bar-a',
+					backgroundTpl: '<div class="ui-popup-screen ui-overlay-a"></div>',
+					displayTpl: '<input data-theme="b" type="text" />',
+					buttonNumberTpl: '<a data-role="button" data-theme="b">4</a>',
+					buttonFunctionTpl: '<a data-role="button" data-theme="a">4</a>'
+				});
+			});
+		</script>
+	</head>
+	<body>
+	<div data-role="page" class="jqm-demos" data-quicklinks="true">
+
+		<div data-role="header" class="jqm-header">
+			<h2>jQuery NumPad</h2>
+		</div><!-- /header -->
+
+    <div role="main" class="ui-content jqm-content">
+		<h2>Numeric keypads for input fields</h2>
+        <div data-demo-html="true">
+             <label for="text-basic">Text input:</label>
+             <input type="text" name="text-basic" id="text-basic" value="1">
+        </div><!-- /demo-html -->
+
+        <div data-demo-html="true">
+             <label for="number-pattern">Number + [0-9]* pattern:</label>
+             <input type="number" name="number" pattern="[0-9]*" id="number-pattern" value="2">
+        </div><!-- /demo-html -->
+		<h2>Numeric keypad for a div element</h2>
+		<div data-demo-html="true">
+             <div id="numpad4div">3</div>
+        </div><!-- /demo-html -->
+		<h2>Numeric keypad for table column</h2>
+		<div data-demo-html="true">
+             <table id="numpad4table" data-role="table">
+				<thead>
+					<tr>
+						<th>Product</th>
+						<th>Price</th>
+						<th>Quantity</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>XXL Keyboard</td>
+						<td>29,95</td>
+						<td class="qtyInput">1</td>
+					</tr>
+					<tr>
+						<td>XXL Mouse</td>
+						<td>19,95</td>
+						<td class="qtyInput">1</td>
+					</tr>
+					<tr>
+						<td>DVD-RW</td>
+						<td>1,95</td>
+						<td class="qtyInput">20</td>
+					</tr>
+				</tbody>
+			 </table>
+        </div><!-- /demo-html -->
+	</div>
+
+
+</div><!-- /page -->
+
+</body>
+</html>
