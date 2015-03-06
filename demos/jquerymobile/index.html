@@ -3,49 +3,60 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>jQuery Numpad - jQuery Mobile Demo</title>
+	<title>jQuery.NumPad - numeric keypad for jQuery Mobile (Demo)</title>
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 		<link rel="stylesheet" href="../../jquery.numpad.css">
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
 		<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 		<script src="../../jquery.numpad.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-		<script>
+		<script type="text/javascript">
+			// Set NumPad defaults for jQuery mobile. 
+			// These defaults will be applied to all NumPads within this document!
+			$.fn.numpad.defaults.gridTpl = '<table class="ui-bar-a"></table>';
+			$.fn.numpad.defaults.backgroundTpl = '<div class="ui-popup-screen ui-overlay-a"></div>';
+			$.fn.numpad.defaults.displayTpl = '<input data-theme="b" type="text" />';
+			$.fn.numpad.defaults.buttonNumberTpl =  '<a data-role="button" data-theme="b"></a>';
+			$.fn.numpad.defaults.buttonFunctionTpl = '<a data-role="button" data-theme="a"></a>';
+			$.fn.numpad.defaults.onKeypadCreate = function(){$(this).enhanceWithin();};
+			
+			// Instantiate NumPad once the page is ready to be shown
 			$(document).on('pageshow', function(){
-				$('#text-basic').numpad({
-					gridTableClass: 'ui-bar-a',
-					backgroundTpl: '<div class="ui-popup-screen ui-overlay-a"></div>',
-					displayTpl: '<input data-theme="b" type="text" />',
-					buttonNumberTpl: '<a data-role="button" data-theme="b">4</a>',
-					buttonFunctionTpl: '<a data-role="button" data-theme="a">4</a>'
+				$('#text-basic').numpad();
+				$('#numpadButton-btn').numpad({
+					target: $('#numpadButton'),
 				});
-				$('#numpad4div').numpad({
-					gridTableClass: 'ui-bar-a',
-					backgroundTpl: '<div class="ui-popup-screen ui-overlay-a"></div>',
-					displayTpl: '<input data-theme="b" type="text" />',
-					buttonNumberTpl: '<a data-role="button" data-theme="b">4</a>',
-					buttonFunctionTpl: '<a data-role="button" data-theme="a">4</a>'
-				});
+				$('#numpad4div').numpad();
+				$('#numpad4column .qtyInput').numpad();
 			});
 		</script>
+		<style type="text/css">
+			.controlgroup-textinput{
+				padding-top: .22em;
+				padding-bottom: .22em;
+			}
+		</style>
 	</head>
 	<body>
 	<div data-role="page" class="jqm-demos" data-quicklinks="true">
 
 		<div data-role="header" class="jqm-header">
-			<h2>jQuery NumPad</h2>
+			<h2>Numeric keypad for jQuery mobile</h2>
 		</div><!-- /header -->
 
     <div role="main" class="ui-content jqm-content">
 		<h2>Numeric keypads for input fields</h2>
         <div data-demo-html="true">
-             <label for="text-basic">Text input:</label>
+             <label for="text-basic">Simple input (click to toggle numpad)</label>
              <input type="text" name="text-basic" id="text-basic" value="1">
         </div><!-- /demo-html -->
 
-        <div data-demo-html="true">
-             <label for="number-pattern">Number + [0-9]* pattern:</label>
-             <input type="number" name="number" pattern="[0-9]*" id="number-pattern" value="2">
+        <div>
+			<label for="numpadButton">Input with extra numpad button</label>
+			<div data-role="controlgroup" data-type="horizontal">
+				<input type="text" id="numpadButton" data-wrapper-class="controlgroup-textinput ui-btn" value="2">
+				<button id="numpadButton-btn" class="ui-btn ui-icon-grid ui-btn-icon-notext">&nbsp;</button>
+			</div>
         </div><!-- /demo-html -->
 		<h2>Numeric keypad for a div element</h2>
 		<div data-demo-html="true">
@@ -53,7 +64,7 @@
         </div><!-- /demo-html -->
 		<h2>Numeric keypad for table column</h2>
 		<div data-demo-html="true">
-             <table id="numpad4table" data-role="table">
+             <table id="numpad4column" data-role="table" class="ui-responsive">
 				<thead>
 					<tr>
 						<th>Product</th>
