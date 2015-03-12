@@ -1,3 +1,17 @@
+/*
+ * jQuery.NumPad
+ *
+ * Copyright (c) 2015 Andrej Kabachnik
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ * Project home:
+ * https://github.com/kabachello/jQuery.NumPad
+ *
+ * Version: 1.0
+ *
+ */
 (function($){
     $.fn.numpad=function(options){
 		
