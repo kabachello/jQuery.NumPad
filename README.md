@@ -7,17 +7,28 @@ With jQuery mobile: http://a.kabachnik.info/numeric-keypad-for-jquery-mobile.htm
 With Bootstra: coming soon!
 
 ## Quick start
-1. Include the plugin and the CSS in your header
+
+1) Include the plugin and the CSS in your header
+
 ```html
 <link rel="stylesheet" href="path_to_numpad_folder/jquery.numpad.css">
 <script type="text/javascript" src="path_to_numpad_folder/jquery.numpad.js"></script>
 ```
-2. Initialize numpads for every element you want to toggle a numeric keypad
+
+2) Initialize numpads for every element you want to toggle a numeric keypad
+
 ```javascript
 function($){
 	$('selector').numpad();
 }
 ```
 
-##License
-jQuery.NumPad is an open source project by [Andrej Kabachnik](http://a.kabachnik.info), that is licensed under [MIT](http://opensource.org/licenses/MIT). Almsaeed Studio reserves the right to change the license of future releases.
+## TODOs and known limitations
+- Add support for negative numbers
+- Add support for fractions
+- Add position options to place the keypad above or aside the target element
+- Add an onClose callback to support custom target elements
+- Make a simple calculator
+
+## License
+jQuery.NumPad is an open source project by [Andrej Kabachnik](http://a.kabachnik.info), that is licensed under [MIT](http://opensource.org/licenses/MIT).
