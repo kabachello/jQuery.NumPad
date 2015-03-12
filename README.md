@@ -7,7 +7,14 @@ With jQuery mobile: http://a.kabachnik.info/numeric-keypad-for-jquery-mobile.htm
 With Bootstra: coming soon!
 
 ## Quick start
-To use jQuery.NumPad you just need to download include the files jquery.numpad.js and jquery.numpad.css in the header section of your HTML-page. Now you can initialize the NumPads via
+1. Include the plugin and the CSS in your header
+
+```html
+<link rel="stylesheet" href="path_to_numpad_folder/jquery.numpad.css">
+<script type="text/javascript" src="path_to_numpad_folder/jquery.numpad.js"></script>
+```
+
+2. Initialize numpads for every element you want to toggle a numeric keypad
 
 ```javascript
 function($){
