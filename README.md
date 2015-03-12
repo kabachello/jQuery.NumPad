@@ -18,3 +18,6 @@ function($){
 	$('selector').numpad();
 }
 ```
+
+##License
+jQuery.NumPad is an open source project by [Andrej Kabachnik](http://a.kabachnik.info), that is licensed under [MIT](http://opensource.org/licenses/MIT). Almsaeed Studio reserves the right to change the license of future releases.
