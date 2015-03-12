@@ -2,7 +2,7 @@
 Flexible touch-optimized numeric keypad for web applications based on jQuery. One of the best things about jQuery.NumPad is that it can easily fit into most UI frameworks using jQuery by merely setting a few templates! The numeric keypad can be used to fill inputs, password fields, general div-elements or entire table columns.
 
 ## Demos
-- With jQuery mobile: http://a.kabachnik.info/numeric-keypad-for-jquery-mobile.html
+- With jQuery mobile: http://a.kabachnik.info/numeric-keypad-for-jquerymobile.html
 - With Bootstrap: coming soon!
 - Stand alone: coming soon!
 
@@ -41,7 +41,7 @@ $.fn.numpad.defaults.optionName = optionValue;
 - positionX (default: 'center') - horizontal position of the keypad relative to the visible window. Possible values: left, right, center or a integer value
 - positionY (default: 'middle') - vertical position of the keypad relative to the visible window. Possible values: top, bottom, middle or an integer value.
 
-### Templates
+### Template options
 - backgroundTpl (default: '<div></div>') - Template for the background overlay behind the Keypad
 - gridTpl (default: '<table></table>') - Template for the keypad grid
 - displayTpl (default: '<input type="number" />') - Template for the display field above the keypad
@@ -51,13 +51,13 @@ $.fn.numpad.defaults.optionName = optionValue;
 - buttonNumberTpl (default: '<button></button>') - Template for the number buttons
 - buttonFunctionTpl (default: '<button></button>') - Template for the functional buttons (like clear, done, etc.)
 
-### Translations
+### Translation options
 - textDone (default: 'Done') - Text of the done button
 - textDelete (default: 'Del') - Text of the delete or backspace button
 - textClear (default: 'Clear') - Text of the clear button
 - textCancel (default: 'Cancel') - Text of the cancel button
 
-### Events and callbacks
+### Callbacks
 - onKeypadCreate (default: false) - Callback function, that is called once a numpad is created - right after initialization. Using this callback the keypad can be customized by regular javascript. The event is dispatched once for each keypad. It is not dispatched when the keypad is shown!
 
 ## TODOs
