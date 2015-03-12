@@ -42,14 +42,14 @@ $.fn.numpad.defaults.optionName = optionValue;
 - positionY (default: 'middle') - vertical position of the keypad relative to the visible window. Possible values: top, bottom, middle or an integer value.
 
 ### Template options
-- backgroundTpl (default: '<div></div>') - Template for the background overlay behind the Keypad
-- gridTpl (default: '<table></table>') - Template for the keypad grid
-- displayTpl (default: '<input type="number" />') - Template for the display field above the keypad
-- displayCellTpl (default: '<td colspan="4"></td>') - Template for the grid cell, where the display field is located
-- rowTpl (default: '<tr></tr>') - Template for each row of the grid
-- cellTpl (default: '<td></td>') - Template for each regular cell of the grid
-- buttonNumberTpl (default: '<button></button>') - Template for the number buttons
-- buttonFunctionTpl (default: '<button></button>') - Template for the functional buttons (like clear, done, etc.)
+- backgroundTpl (default: '&lt;div&gt;&lt;/div&gt;') - Template for the background overlay behind the Keypad
+- gridTpl (default: '&lt;table&gt;&lt;/table&gt;') - Template for the keypad grid
+- displayTpl (default: '&lt;input type="number" /&gt;') - Template for the display field above the keypad
+- displayCellTpl (default: '&lt;td colspan="4"&gt;&lt;/td&gt;') - Template for the grid cell, where the display field is located
+- rowTpl (default: '&lt;tr&gt;&lt;/tr&gt;') - Template for each row of the grid
+- cellTpl (default: '&lt;td&gt;&lt;/td&gt;') - Template for each regular cell of the grid
+- buttonNumberTpl (default: '&lt;button&gt;&lt;/button&gt;') - Template for the number buttons
+- buttonFunctionTpl (default: '&lt;button&gt;&lt;/button&gt;') - Template for the functional buttons (like clear, done, etc.)
 
 ### Translation options
 - textDone (default: 'Done') - Text of the done button
