@@ -40,6 +40,7 @@ $.fn.numpad.defaults.optionName = optionValue;
 - position (default: 'fixed') - position of the keypad. Fixed position can be defined by setting positionX and positionY.
 - positionX (default: 'center') - horizontal position of the keypad relative to the visible window. Possible values: left, right, center or a integer value
 - positionY (default: 'middle') - vertical position of the keypad relative to the visible window. Possible values: top, bottom, middle or an integer value.
+
 ### Templates
 - backgroundTpl (default: '<div></div>') - Template for the background overlay behind the Keypad
 - gridTpl (default: '<table></table>') - Template for the keypad grid
@@ -49,11 +50,13 @@ $.fn.numpad.defaults.optionName = optionValue;
 - cellTpl (default: '<td></td>') - Template for each regular cell of the grid
 - buttonNumberTpl (default: '<button></button>') - Template for the number buttons
 - buttonFunctionTpl (default: '<button></button>') - Template for the functional buttons (like clear, done, etc.)
+
 ### Translations
 - textDone (default: 'Done') - Text of the done button
 - textDelete (default: 'Del') - Text of the delete or backspace button
 - textClear (default: 'Clear') - Text of the clear button
 - textCancel (default: 'Cancel') - Text of the cancel button
+
 ### Events and callbacks
 - onKeypadCreate (default: false) - Callback function, that is called once a numpad is created - right after initialization. Using this callback the keypad can be customized by regular javascript. The event is dispatched once for each keypad. It is not dispatched when the keypad is shown!
 
