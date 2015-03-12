@@ -1,5 +1,5 @@
 # jQuery.NumPad
-Flexible touch-optimized numeric keypad for web applications based on jQuery. One of the best things about jQuery.NumPad is that it can easily fit into most UI frameworks using jQuery by merey setting a few templates! The numeric keypad can be used input fields, password fields, general div-elements or entire table columns.
+Flexible touch-optimized numeric keypad for web applications based on jQuery. One of the best things about jQuery.NumPad is that it can easily fit into most UI frameworks using jQuery by merely setting a few templates! The numeric keypad can be used input fields, password fields, general div-elements or entire table columns.
 
 ## Demos
 - With jQuery mobile: http://a.kabachnik.info/numeric-keypad-for-jquery-mobile.html
@@ -23,7 +23,7 @@ function($){
 }
 ```
 
-## TODOs and known limitations
+## TODOs
 - Add support for negative numbers
 - Add support for fractions
 - Add position options to place the keypad above or aside the target element
