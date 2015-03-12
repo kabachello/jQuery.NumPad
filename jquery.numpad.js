@@ -2,6 +2,8 @@
     $.fn.numpad=function(options){
 		
 		options = $.extend({}, $.fn.numpad.defaults, options);
+		var id = 'nmpd' + $('.nmpd-wrapper').length + 1;
+		
 		
 		return this.each(function(){
 			$(this).attr("readonly", true);
@@ -9,11 +11,12 @@
 				nmpd.open(options.target ? options.target : $(this));
 			});
 
-			if ($('#nmpd').length == 0) {
-				var nmpd = $('<div id="nmpd"></div>').css('display', 'none');
+			if ($('#'+id).length == 0) {
+				var nmpd = $('<div id="' + id + '"></div>').addClass('nmpd-wrapper');
 				var table = $(options.gridTpl).addClass('nmpd-grid');
 				var display = $(options.displayTpl).addClass('nmpd-display').attr('id', 'nmpd-display');
 				nmpd.display = display;
+				nmpd.grid = table;
 				table.append($(options.rowTpl).append($(options.displayCellTpl).append(display).append($('<input type="hidden" class="dirty" value="0"></input>'))));			
 				table.append(
 					$(options.rowTpl)
@@ -60,17 +63,17 @@
 						})))
 						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html(options.textDone).addClass('done')))
 					);
-				nmpd.append($(options.backgroundTpl).addClass('nmpd-overlay').attr('id', 'nmpd-overlay').click(function(){nmpd.close(false)}));
+				nmpd.append($(options.backgroundTpl).addClass('nmpd-overlay').attr('id', 'nmpd-overlay').click(function(){nmpd.close(false);}));
 				nmpd.append(table);
 				if (options.onKeypadCreate){
 					nmpd.on('numpad.create', options.onKeypadCreate);
 				}
 				(options.appendKeypadTo ? options.appendKeypadTo : $(document.body)).append(nmpd);   
 				
-				$('#nmpd .numero').bind('click', function(){
-					if ($('#nmpd .dirty').val() == '0'){
+				$('#'+id+' .numero').bind('click', function(){
+					if ($('#'+id+' .dirty').val() == '0'){
 						display.val($(this).text());
-						$('#nmpd .dirty').val(1);
+						$('#'+id+' .dirty').val(1);
 					} else {
 						display.val(display.val() + $(this).text());
 					}
@@ -78,8 +81,8 @@
 				
 				nmpd.trigger('numpad.create');
 			} else {
-				nmpd = $('#nmpd');
-				nmpd.display = $('#nmpd input.nmpd-display');
+				nmpd = $('#'+id);
+				nmpd.display = $('#'+id+' input.nmpd-display');
 			}
 
 			nmpd.close = function(target){
@@ -92,7 +95,7 @@
 				} 
 				nmpd.hide('fast');
 				return nmpd;
-			}
+			};
 			
 			nmpd.open = function(target, initialValue){
 				if (initialValue){
@@ -104,12 +107,44 @@
 						nmpd.display.val(parseFloat(target.text()));
 					}
 				}
-				$('#nmpd .dirty').val(0);
+				$('#'+id+' .dirty').val(0);
 				nmpd.show('fast');
-				$('#nmpd .done').one('click', function(){ nmpd.close(target); });
+				position(nmpd.grid, options.position, options.positionX, options.positionY);
+				$('#'+id+' .done').one('click', function(){ nmpd.close(target); });
 				return nmpd;
-			}		  
+			};		  
 		});
+    };
+    
+    function position(element, mode, posX, posY) {
+    	var x = 0;
+    	var y = 0;
+    	if (mode == 'fixed'){
+	        element.css('position','fixed');
+	        
+	        if (posX == 'left'){
+	        	x = 0;
+	        } else if (posX == 'right'){
+	        	x = $(window).width() - element.outerWidth();
+	        } else if (posX == 'center'){
+	        	x = ($(window).width() / 2) - (element.outerWidth() / 2);
+	        } else if ($.type(posX) == 'number'){
+	        	x = posX;
+	        }
+	        element.css('left', x);
+	        	        
+	        if (posY == 'top'){
+	        	y = 0;
+	        } else if (posY == 'bottom'){
+	        	y = $(window).height() - element.outerHeight();
+	        } else if (posY == 'middle'){
+	        	y = ($(window).height() / 2) - (element.outerHeight() / 2);
+	        } else if ($.type(posY) == 'number'){
+	        	y = posY;
+	        }
+	        element.css('top', y);
+    	}
+        return element;
     }
 	
 	$.fn.numpad.defaults = {
@@ -129,6 +164,9 @@
 		textClear: 'Clear',
 		textCancel: 'Cancel',
 		appendKeypadTo: false,
+		position: 'fixed',
+		positionX: 'center',
+		positionY: 'middle',
 		onKeypadCreate: false
 	};
 })(jQuery);
