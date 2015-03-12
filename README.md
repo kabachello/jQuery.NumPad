@@ -1,10 +1,10 @@
 # jQuery.NumPad
-Flexible touch-optimized numeric keypad for web applications based on jQuery
+Flexible touch-optimized numeric keypad for web applications based on jQuery. One of the best things about jQuery.NumPad is that it can easily fit into most UI frameworks using jQuery by merey setting a few templates! The numeric keypad can be used input fields, password fields, general div-elements or entire table columns.
 
 ## Demos
-With jQuery mobile: http://a.kabachnik.info/numeric-keypad-for-jquery-mobile.html
-
-With Bootstra: coming soon!
+- With jQuery mobile: http://a.kabachnik.info/numeric-keypad-for-jquery-mobile.html
+- With Bootstrap: coming soon!
+- Stand alone: coming soon!
 
 ## Quick start
 
