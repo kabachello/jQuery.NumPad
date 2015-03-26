@@ -3,8 +3,11 @@ Flexible touch-optimized numeric keypad for web applications based on jQuery. On
 
 ## Demos
 - With jQuery mobile: http://a.kabachnik.info/numeric-keypad-for-jquerymobile.html
-- With Bootstrap: coming soon!
+- With Bootstrap: http://a.kabachnik.info/jquery-numpad.html
 - Stand alone: coming soon!
+
+## Documentation
+http://a.kabachnik.info/jquery-numpad.html
 
 ## Quick start
 
@@ -22,43 +25,6 @@ function($){
 	$('selector1').numpad();
 }
 ```
-
-## Options
-Options can be set for every numpad by passing an object argument to numpad()
-```javascript
-$('selector2').numpad({optionName: optionValue});
-```
-
-Default options for an entire page can be specified via
-```javascript
-$.fn.numpad.defaults.optionName = optionValue;
-```  
-### General options
-- target (default: false) - a jQuery element, to put the input from the keypad to. If set to false, the element, on which numpad() is called, will be used.
-- openOnEvent (default: 'click') - name of the event to trigger opening the numpad.
-- appendKeypadTo (default: false) - the jQuery elemnt, that the keypad should be appended to. If set to false, $(document) will be used.
-- position (default: 'fixed') - position of the keypad. Fixed position can be defined by setting positionX and positionY.
-- positionX (default: 'center') - horizontal position of the keypad relative to the visible window. Possible values: left, right, center or a integer value
-- positionY (default: 'middle') - vertical position of the keypad relative to the visible window. Possible values: top, bottom, middle or an integer value.
-
-### Template options
-- backgroundTpl (default: '&lt;div&gt;&lt;/div&gt;') - Template for the background overlay behind the Keypad
-- gridTpl (default: '&lt;table&gt;&lt;/table&gt;') - Template for the keypad grid
-- displayTpl (default: '&lt;input type="number" /&gt;') - Template for the display field above the keypad
-- displayCellTpl (default: '&lt;td colspan="4"&gt;&lt;/td&gt;') - Template for the grid cell, where the display field is located
-- rowTpl (default: '&lt;tr&gt;&lt;/tr&gt;') - Template for each row of the grid
-- cellTpl (default: '&lt;td&gt;&lt;/td&gt;') - Template for each regular cell of the grid
-- buttonNumberTpl (default: '&lt;button&gt;&lt;/button&gt;') - Template for the number buttons
-- buttonFunctionTpl (default: '&lt;button&gt;&lt;/button&gt;') - Template for the functional buttons (like clear, done, etc.)
-
-### Translation options
-- textDone (default: 'Done') - Text of the done button
-- textDelete (default: 'Del') - Text of the delete or backspace button
-- textClear (default: 'Clear') - Text of the clear button
-- textCancel (default: 'Cancel') - Text of the cancel button
-
-### Callbacks
-- onKeypadCreate (default: false) - Callback function, that is called once a numpad is created - right after initialization. Using this callback the keypad can be customized by regular javascript. The event is dispatched once for each keypad. It is not dispatched when the keypad is shown!
 
 ## TODOs
 - Add support for negative numbers

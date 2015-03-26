@@ -20,10 +20,6 @@
 		
 		
 		return this.each(function(){
-			$(this).attr("readonly", true);
-			$(this).bind(options.openOnEvent,function(){
-				nmpd.open(options.target ? options.target : $(this));
-			});
 
 			if ($('#'+id).length == 0) {
 				var nmpd = $('<div id="' + id + '"></div>').addClass('nmpd-wrapper');
@@ -98,6 +94,12 @@
 				nmpd = $('#'+id);
 				nmpd.display = $('#'+id+' input.nmpd-display');
 			}
+			
+			$(this).attr("readonly", true).attr('data-numpad', id).addClass('nmpd-target');
+			$(this).bind(options.openOnEvent,function(){
+				console.log(nmpd);
+				nmpd.open(options.target ? options.target : $(this));
+			});
 
 			nmpd.close = function(target){
 				if (target){
@@ -107,7 +109,7 @@
 						target.html(nmpd.display.val());
 					}
 				} 
-				nmpd.hide('fast');
+				nmpd.hide();
 				return nmpd;
 			};
 			
@@ -122,8 +124,8 @@
 					}
 				}
 				$('#'+id+' .dirty').val(0);
-				nmpd.show('fast');
-				position(nmpd.grid, options.position, options.positionX, options.positionY);
+				nmpd.show().find('.cancel').focus();
+				position(nmpd.find('.nmpd-grid'), options.position, options.positionX, options.positionY);
 				$('#'+id+' .done').one('click', function(){ nmpd.close(target); });
 				return nmpd;
 			};		  
