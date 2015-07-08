@@ -78,6 +78,12 @@
 				if (options.onKeypadCreate){
 					nmpd.on('numpad.create', options.onKeypadCreate);
 				}
+				if (options.onKeypadOpen){
+					nmpd.on('numpad.open', options.onKeypadOpen);
+				}
+				if (options.onKeypadClose){
+					nmpd.on('numpad.close', options.onKeypadClose);
+				}
 				(options.appendKeypadTo ? options.appendKeypadTo : $(document.body)).append(nmpd);   
 				
 				$('#'+id+' .numero').bind('click', function(){
@@ -110,6 +116,7 @@
 					}
 				} 
 				nmpd.hide();
+				nmpd.trigger('numpad.close');
 				return nmpd;
 			};
 			
@@ -127,6 +134,7 @@
 				nmpd.show().find('.cancel').focus();
 				position(nmpd.find('.nmpd-grid'), options.position, options.positionX, options.positionY);
 				$('#'+id+' .done').one('click', function(){ nmpd.close(target); });
+				nmpd.trigger('numpad.open');
 				return nmpd;
 			};		  
 		});
@@ -183,6 +191,8 @@
 		position: 'fixed',
 		positionX: 'center',
 		positionY: 'middle',
-		onKeypadCreate: false
+		onKeypadCreate: false,
+		onKeypadOpen: false,
+		onKeypadClose: false
 	};
 })(jQuery);

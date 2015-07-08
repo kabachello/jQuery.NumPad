@@ -30,8 +30,6 @@ function($){
 - Add support for negative numbers
 - Add support for fractions
 - Add position options to place the keypad above or aside the target element
-- Add an onClose callback to support custom target elements
-- Add an onOpen callback to support custom initial values
 - Make a simple calculator
 
 ## License
