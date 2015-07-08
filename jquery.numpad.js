@@ -9,7 +9,7 @@
  * Project home:
  * https://github.com/kabachello/jQuery.NumPad
  *
- * Version: 1.0
+ * Version: 1.1
  *
  */
 (function($){
@@ -24,7 +24,7 @@
 			if ($('#'+id).length == 0) {
 				var nmpd = $('<div id="' + id + '"></div>').addClass('nmpd-wrapper');
 				var table = $(options.gridTpl).addClass('nmpd-grid');
-				var display = $(options.displayTpl).addClass('nmpd-display').attr('id', 'nmpd-display');
+				var display = $(options.displayTpl).addClass('nmpd-display');
 				nmpd.display = display;
 				nmpd.grid = table;
 				table.append($(options.rowTpl).append($(options.displayCellTpl).append(display).append($('<input type="hidden" class="dirty" value="0"></input>'))));			
@@ -73,7 +73,7 @@
 						})))
 						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html(options.textDone).addClass('done')))
 					);
-				nmpd.append($(options.backgroundTpl).addClass('nmpd-overlay').attr('id', 'nmpd-overlay').click(function(){nmpd.close(false);}));
+				nmpd.append($(options.backgroundTpl).addClass('nmpd-overlay').click(function(){nmpd.close(false);}));
 				nmpd.append(table);
 				if (options.onKeypadCreate){
 					nmpd.on('numpad.create', options.onKeypadCreate);
