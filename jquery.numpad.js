@@ -9,7 +9,7 @@
  * Project home:
  * https://github.com/kabachello/jQuery.NumPad
  *
- * Version: 1.1
+ * Version: 1.2
  *
  */
 (function($){
@@ -34,7 +34,7 @@
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(8).addClass('numero')))
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(9).addClass('numero')))
 						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html(options.textDelete).addClass('del').click(function(){
-							display.val(display.val().substring(0,display.val().length - 1));
+							nmpd.setValue(display.val().substring(0,display.val().length - 1));
 						})))
 					).append(
 					$(options.rowTpl)
@@ -42,7 +42,7 @@
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(5).addClass('numero')))
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(6).addClass('numero')))
 						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html(options.textClear).addClass('clear').click(function(){
-							display.val('');
+							nmpd.setValue('');
 						})))
 					).append(
 					$(options.rowTpl)
@@ -57,7 +57,7 @@
 						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html('-').addClass('neg').click(function(){
 							if (!isNaN(display.val()) && display.val().length > 0) {
 								if (parseInt(display.val()) > 0) {
-									display.val(parseInt(display.val()) - 1);
+									nmpd.setValue(parseInt(display.val()) - 1);
 								}
 							}
 						})))
@@ -65,9 +65,9 @@
 						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html('+').addClass('pos').click(function(){
 							if (!isNaN(display.val())) {
 								if (display.val().length == 0) {
-									display.val(1);
+									nmpd.setValue(1);
 								} else {
-									display.val(parseInt(display.val()) + 1);
+									nmpd.setValue(parseInt(display.val()) + 1);
 								}
 							}
 						})))
@@ -84,15 +84,21 @@
 				if (options.onKeypadClose){
 					nmpd.on('numpad.close', options.onKeypadClose);
 				}
+				if (options.onChange){
+					nmpd.on('numpad.change', options.onChange);
+				}
 				(options.appendKeypadTo ? options.appendKeypadTo : $(document.body)).append(nmpd);   
 				
 				$('#'+id+' .numero').bind('click', function(){
+					var val;
 					if ($('#'+id+' .dirty').val() == '0'){
-						display.val($(this).text());
+						val = $(this).text();
 						$('#'+id+' .dirty').val(1);
 					} else {
-						display.val(display.val() + $(this).text());
+						val = display.val() + $(this).text();
 					}
+					nmpd.setValue(val);
+					
 				});
 				
 				nmpd.trigger('numpad.create');
@@ -103,9 +109,13 @@
 			
 			$(this).attr("readonly", true).attr('data-numpad', id).addClass('nmpd-target');
 			$(this).bind(options.openOnEvent,function(){
-				console.log(nmpd);
 				nmpd.open(options.target ? options.target : $(this));
 			});
+			
+			nmpd.setValue = function(value){
+				nmpd.display.val(value);
+				nmpd.trigger('numpad.change', [value]);
+			};
 
 			nmpd.close = function(target){
 				if (target){
@@ -117,6 +127,9 @@
 				} 
 				nmpd.hide();
 				nmpd.trigger('numpad.close');
+				if (target.prop("tagName") == 'INPUT'){
+					target.trigger('change');
+				}
 				return nmpd;
 			};
 			
@@ -193,6 +206,7 @@
 		positionY: 'middle',
 		onKeypadCreate: false,
 		onKeypadOpen: false,
-		onKeypadClose: false
+		onKeypadClose: false,
+		onChange: false
 	};
 })(jQuery);
