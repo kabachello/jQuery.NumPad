@@ -9,7 +9,7 @@
  * Project home:
  * https://github.com/kabachello/jQuery.NumPad
  *
- * Version: 1.2
+ * Version: 1.2.1
  *
  */
 (function($){
@@ -113,6 +113,7 @@
 			});
 			
 			nmpd.setValue = function(value){
+				if (nmpd.display.attr('maxLength') < value.length) value = value.substr(0, nmpd.display.attr('maxLength'));
 				nmpd.display.val(value);
 				nmpd.trigger('numpad.change', [value]);
 			};
@@ -127,7 +128,7 @@
 				} 
 				nmpd.hide();
 				nmpd.trigger('numpad.close');
-				if (target.prop("tagName") == 'INPUT'){
+				if (target && target.prop("tagName") == 'INPUT'){
 					target.trigger('change');
 				}
 				return nmpd;
@@ -139,6 +140,7 @@
 				} else {
 					if (target.prop("tagName") == 'INPUT'){
 						nmpd.display.val(target.val());
+						nmpd.display.attr('maxLength', target.attr('maxLength'));
 					} else {
 						nmpd.display.val(parseFloat(target.text()));
 					}
