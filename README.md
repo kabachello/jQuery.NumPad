@@ -33,10 +33,4 @@ function($){
 - Make a simple calculator
 
 ## License
-jQuery.NumPad is an open source project by [Andrej Kabachnik](http://a.kabachnik.info), that is licensed under [MIT](http://opensource.org/licenses/MIT). If you like the plugin an wish to support further development, you can show your appriciation by a donation. Even small donations are a great support!
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="B2Y3Y6E45FDBU">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
-</form>
+jQuery.NumPad is an open source project by [Andrej Kabachnik](http://a.kabachnik.info), that is licensed under [MIT](http://opensource.org/licenses/MIT). If you like the plugin an wish to support further development, you can show your appriciation by a <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B2Y3Y6E45FDBU">donation</a>. Even small donations are a great support!
