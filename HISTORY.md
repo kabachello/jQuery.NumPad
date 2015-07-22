@@ -1,3 +1,9 @@
+### v1.3
+    * Added support for negative numbers and an appropriate button.
+	* Added support for fractions and a corresponding decimal button.
+	* Removed the plus and minus button to save space.
+	* Fixed changing multiple elements at the same time when the numpad is used for a collection (e.g. table column).
+
 ### v1.2.1
     * Fixed maxlength parameter for the numpad display. Additionally it is now inherited from the original input field (target).
 

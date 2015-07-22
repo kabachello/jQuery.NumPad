@@ -1,4 +1,4 @@
-/*
+/**
  * jQuery.NumPad
  *
  * Copyright (c) 2015 Andrej Kabachnik
@@ -9,32 +9,39 @@
  * Project home:
  * https://github.com/kabachello/jQuery.NumPad
  *
- * Version: 1.2.1
+ * Version: 1.3
  *
  */
 (function($){
     $.fn.numpad=function(options){
-		
+		// Apply the specified options overriding the defaults
 		options = $.extend({}, $.fn.numpad.defaults, options);
+		
+		// Create a numpad. One for all elements in this jQuery selector.
+		// Since numpad() can be called on multiple elements on one page, each call will create a unique numpad id.
 		var id = 'nmpd' + $('.nmpd-wrapper').length + 1;
-		
-		
 		return this.each(function(){
-
+			
+			// If an element with the generated unique numpad id exists, the numpad had been instantiated already.
+			// Otherwise create a new one!
 			if ($('#'+id).length == 0) {
+				/** @var nmpd jQuery object containing the entire numpad */
 				var nmpd = $('<div id="' + id + '"></div>').addClass('nmpd-wrapper');
-				var table = $(options.gridTpl).addClass('nmpd-grid');
+				/** @var display jQuery object representing the display of the numpad (typically an input field) */
 				var display = $(options.displayTpl).addClass('nmpd-display');
 				nmpd.display = display;
+				/** @var grid jQuery object containing the grid for the numpad: the display, the buttons, etc. */
+				var table = $(options.gridTpl).addClass('nmpd-grid');
 				nmpd.grid = table;
-				table.append($(options.rowTpl).append($(options.displayCellTpl).append(display).append($('<input type="hidden" class="dirty" value="0"></input>'))));			
+				table.append($(options.rowTpl).append($(options.displayCellTpl).append(display).append($('<input type="hidden" class="dirty" value="0"></input>'))));
+				// Create rows and columns of the the grid with appropriate buttons
 				table.append(
 					$(options.rowTpl)
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(7).addClass('numero')))
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(8).addClass('numero')))
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(9).addClass('numero')))
 						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html(options.textDelete).addClass('del').click(function(){
-							nmpd.setValue(display.val().substring(0,display.val().length - 1));
+							nmpd.setValue(nmpd.getValue().toString().substring(0,nmpd.getValue().toString().length - 1));
 						})))
 					).append(
 					$(options.rowTpl)
@@ -54,27 +61,29 @@
 						})))
 					).append(
 					$(options.rowTpl)
-						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html('-').addClass('neg').click(function(){
-							if (!isNaN(display.val()) && display.val().length > 0) {
-								if (parseInt(display.val()) > 0) {
-									nmpd.setValue(parseInt(display.val()) - 1);
-								}
-							}
+						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html('&plusmn;').addClass('neg').click(function(){
+							nmpd.setValue(nmpd.getValue() * (-1));
 						})))
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(0).addClass('numero')))
-						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html('+').addClass('pos').click(function(){
-							if (!isNaN(display.val())) {
-								if (display.val().length == 0) {
-									nmpd.setValue(1);
-								} else {
-									nmpd.setValue(parseInt(display.val()) + 1);
-								}
-							}
+						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html(options.decimalSeparator).addClass('sep').click(function(){
+							nmpd.setValue(nmpd.getValue().toString() + '.');
 						})))
 						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html(options.textDone).addClass('done')))
 					);
+				// Create the backdrop of the numpad - an overlay for the main page
 				nmpd.append($(options.backgroundTpl).addClass('nmpd-overlay').click(function(){nmpd.close(false);}));
+				// Append the grid table to the nmpd element
 				nmpd.append(table);
+				
+				// Hide buttons to be hidden
+				if (options.hidePlusMinusButton){
+					nmpd.find('.neg').hide();
+				}
+				if (options.hideDecimalButton){
+					nmpd.find('.sep').hide();
+				}
+				
+				// Attach events
 				if (options.onKeypadCreate){
 					nmpd.on('numpad.create', options.onKeypadCreate);
 				}
@@ -89,52 +98,90 @@
 				}
 				(options.appendKeypadTo ? options.appendKeypadTo : $(document.body)).append(nmpd);   
 				
+				// Special event for the numeric buttons
 				$('#'+id+' .numero').bind('click', function(){
 					var val;
 					if ($('#'+id+' .dirty').val() == '0'){
 						val = $(this).text();
-						$('#'+id+' .dirty').val(1);
 					} else {
-						val = display.val() + $(this).text();
+						val = nmpd.getValue() ? nmpd.getValue().toString() + $(this).text() : $(this).text();
 					}
-					nmpd.setValue(val);
-					
+					nmpd.setValue(val);	
 				});
 				
+				// Finally, once the numpad is completely instantiated, trigger numpad.create
 				nmpd.trigger('numpad.create');
 			} else {
+				// If the numpad was already instantiated previously, just load it into the nmpd variable
 				nmpd = $('#'+id);
 				nmpd.display = $('#'+id+' input.nmpd-display');
 			}
 			
+			// Make the target element readonly and save the numpad id in the data-numpad property. Also add the special nmpd-target CSS class.
 			$(this).attr("readonly", true).attr('data-numpad', id).addClass('nmpd-target');
+			
+			// Register a listener to open the numpad on the event specified in the options
 			$(this).bind(options.openOnEvent,function(){
 				nmpd.open(options.target ? options.target : $(this));
 			});
 			
-			nmpd.setValue = function(value){
-				if (nmpd.display.attr('maxLength') < value.length) value = value.substr(0, nmpd.display.attr('maxLength'));
-				nmpd.display.val(value);
-				nmpd.trigger('numpad.change', [value]);
+			// Define helper functions
+			
+			/**
+			* Gets the current value displayed in the numpad
+			* @return string | number
+			*/
+			nmpd.getValue = function(){
+				return isNaN(nmpd.display.val()) ? 0 : nmpd.display.val();
 			};
-
+			
+			/**
+			* Sets the display value of the numpad
+			* @param string value
+			* @return jQuery object nmpd
+			*/
+			nmpd.setValue = function(value){
+				if (nmpd.display.attr('maxLength') < value.toString().length) value = value.toString().substr(0, nmpd.display.attr('maxLength'));
+				nmpd.display.val(value);
+				nmpd.find('.dirty').val('1');
+				nmpd.trigger('numpad.change', [value]);
+				return nmpd;
+			};
+			
+			/**
+			* Closes the numpad writing it's value to the given target element
+			* @param jQuery object target
+			* @return jQuery object nmpd
+			*/
 			nmpd.close = function(target){
+				// If a target element is given, set it's value to the dipslay value of the numpad. Otherwise just hid the numpad
 				if (target){
 					if (target.prop("tagName") == 'INPUT'){
-						target.val(nmpd.display.val());
+						target.val(nmpd.getValue().toString().replace('.', options.decimalSeparator));
 					} else {
-						target.html(nmpd.display.val());
+						target.html(nmpd.getValue().toString().replace('.', options.decimalSeparator));
 					}
-				} 
+				}	
+				// Hide the numpad and trigger numpad.close
 				nmpd.hide();
 				nmpd.trigger('numpad.close');
+				// Trigger a change event on the target element if the value has really been changed
+				// TODO check if the value has really been changed!
 				if (target && target.prop("tagName") == 'INPUT'){
 					target.trigger('change');
 				}
 				return nmpd;
 			};
 			
+			/**
+			* Opens the numpad for a given target element optionally filling it with a given value
+			* @param jQuery object target
+			* @param string initialValue
+			* @return jQuery object nmpd
+			*/
 			nmpd.open = function(target, initialValue){
+				// Set the initial value
+				// Use nmpd.display.val to avoid triggering numpad.change for the initial value
 				if (initialValue){
 					nmpd.display.val(initialValue);
 				} else {
@@ -145,16 +192,26 @@
 						nmpd.display.val(parseFloat(target.text()));
 					}
 				}
+				// Mark the numpad as not dirty initially
 				$('#'+id+' .dirty').val(0);
+				// Show the numpad and position it on the page
 				nmpd.show().find('.cancel').focus();
 				position(nmpd.find('.nmpd-grid'), options.position, options.positionX, options.positionY);
+				// Register a click handler on the done button to update the target element
+				// Make sure all other click handlers get removed. Otherwise some unwanted sideeffects may occur if the numpad is
+				// opened multiple times for some reason
+				$('#'+id+' .done').off('click');
 				$('#'+id+' .done').one('click', function(){ nmpd.close(target); });
+				// Finally trigger numpad.open
 				nmpd.trigger('numpad.open');
 				return nmpd;
 			};		  
 		});
     };
     
+	/**
+	* Positions any given jQuery element within the page
+	*/
     function position(element, mode, posX, posY) {
     	var x = 0;
     	var y = 0;
@@ -186,22 +243,27 @@
         return element;
     }
 	
+	// Default values for numpad options
 	$.fn.numpad.defaults = {
 		target: false,
 		openOnEvent: 'click',
 		backgroundTpl: '<div></div>',
 		gridTpl: '<table></table>',
-		displayTpl: '<input type="number" />',
+		displayTpl: '<input type="text" />',
 		displayCellTpl: '<td colspan="4"></td>',
 		rowTpl: '<tr></tr>',
 		cellTpl: '<td></td>',
 		buttonNumberTpl: '<button></button>',
 		buttonFunctionTpl: '<button></button>',
 		gridTableClass: '',
+		hidePlusMinusButton: false,
+		hideDecimalButton: false,
 		textDone: 'Done',
 		textDelete: 'Del',
 		textClear: 'Clear',
 		textCancel: 'Cancel',
+		decimalSeparator: ',',
+		precision: null,
 		appendKeypadTo: false,
 		position: 'fixed',
 		positionX: 'center',

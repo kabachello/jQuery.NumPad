@@ -24,7 +24,9 @@
 			$(document).on('pageshow', function(){
 				$('#text-basic').numpad();
 				$('#password').numpad({
-					displayTpl: '<input data-theme="b" type="password" />'		
+					displayTpl: '<input data-theme="b" type="password" />',
+					hidePlusMinusButton: true,
+					hideDecimalButton: true
 				});
 				$('#numpadButton-btn').numpad({
 					target: $('#numpadButton'),
@@ -63,9 +65,9 @@
         </div><!-- /demo-html -->
 
         <div>
-			<label for="numpadButton">Input with extra numpad button (the input is directly editable, while the button shows the NumPad)</label>
+			<label for="numpadButton">Input with extra numpad button (the input is directly editable, while the button shows the NumPad). Additionally this one has a maxlength="4" and an onChange event handler.</label>
 			<div data-role="controlgroup" data-type="horizontal">
-				<input type="text" id="numpadButton" data-wrapper-class="controlgroup-textinput ui-btn" value="2">
+				<input type="text" id="numpadButton" data-wrapper-class="controlgroup-textinput ui-btn" value="2" maxlength="4" onchange="alert('Value changed to ' + $(this).val());">
 				<button id="numpadButton-btn" class="ui-btn ui-icon-grid ui-btn-icon-notext ui-alt-icon ui-nodisc-icon">&nbsp;</button>
 			</div>
         </div><!-- /demo-html -->
