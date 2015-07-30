@@ -1,3 +1,6 @@
+### v1.3.1
+    * Registered the plugin in the npm repository.
+
 ### v1.3
     * Added support for negative numbers and an appropriate button.
 	* Added support for fractions and a corresponding decimal button.

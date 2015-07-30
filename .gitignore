@@ -45,3 +45,6 @@ Temporary Items
 # Eclipse files and directories
 .project
 .settings
+
+# npm files
+npm-debug.log

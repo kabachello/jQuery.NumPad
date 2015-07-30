@@ -66,7 +66,7 @@
 						})))
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(0).addClass('numero')))
 						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html(options.decimalSeparator).addClass('sep').click(function(){
-							nmpd.setValue(nmpd.getValue().toString() + '.');
+							nmpd.setValue(nmpd.getValue().toString() + options.decimalSeparator);
 						})))
 						.append($(options.cellTpl).append($(options.buttonFunctionTpl).html(options.textDone).addClass('done')))
 					);
