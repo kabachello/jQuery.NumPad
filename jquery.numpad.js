@@ -19,7 +19,7 @@
 		
 		// Create a numpad. One for all elements in this jQuery selector.
 		// Since numpad() can be called on multiple elements on one page, each call will create a unique numpad id.
-		var id = 'nmpd' + $('.nmpd-wrapper').length + 1;
+		var id = 'nmpd' + ($('.nmpd-wrapper').length + 1);
 		return this.each(function(){
 			
 			// If an element with the generated unique numpad id exists, the numpad had been instantiated already.
