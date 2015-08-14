@@ -13,6 +13,14 @@
  *
  */
 (function($){
+
+	// From https://stackoverflow.com/questions/4963053/focus-to-input-without-scrolling
+	var cursorFocus = function(elem) {
+		var x = window.scrollX, y = window.scrollY;
+		elem.focus();
+		window.scrollTo(x, y);
+	}
+	
     $.fn.numpad=function(options){
 		// Apply the specified options overriding the defaults
 		options = $.extend({}, $.fn.numpad.defaults, options);
@@ -195,7 +203,7 @@
 				// Mark the numpad as not dirty initially
 				$('#'+id+' .dirty').val(0);
 				// Show the numpad and position it on the page
-				nmpd.show().find('.cancel').focus();
+				cursorFocus(nmpd.show().find('.cancel'));
 				position(nmpd.find('.nmpd-grid'), options.position, options.positionX, options.positionY);
 				// Register a click handler on the done button to update the target element
 				// Make sure all other click handlers get removed. Otherwise some unwanted sideeffects may occur if the numpad is
