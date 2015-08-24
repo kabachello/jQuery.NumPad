@@ -13,13 +13,21 @@
  *
  */
 (function($){
+
+	// From https://stackoverflow.com/questions/4963053/focus-to-input-without-scrolling
+	var cursorFocus = function(elem) {
+		var x = window.scrollX, y = window.scrollY;
+		elem.focus();
+		window.scrollTo(x, y);
+	}
+	
     $.fn.numpad=function(options){
 		// Apply the specified options overriding the defaults
 		options = $.extend({}, $.fn.numpad.defaults, options);
 		
 		// Create a numpad. One for all elements in this jQuery selector.
 		// Since numpad() can be called on multiple elements on one page, each call will create a unique numpad id.
-		var id = 'nmpd' + $('.nmpd-wrapper').length + 1;
+		var id = 'nmpd' + ($('.nmpd-wrapper').length + 1);
 		return this.each(function(){
 			
 			// If an element with the generated unique numpad id exists, the numpad had been instantiated already.
@@ -195,7 +203,7 @@
 				// Mark the numpad as not dirty initially
 				$('#'+id+' .dirty').val(0);
 				// Show the numpad and position it on the page
-				nmpd.show().find('.cancel').focus();
+				cursorFocus(nmpd.show().find('.cancel'));
 				position(nmpd.find('.nmpd-grid'), options.position, options.positionX, options.positionY);
 				// Register a click handler on the done button to update the target element
 				// Make sure all other click handlers get removed. Otherwise some unwanted sideeffects may occur if the numpad is
