@@ -36,6 +36,10 @@
 				});
 				$('#numpad4div').numpad();
 				$('#numpad4column .qtyInput').numpad();
+				
+				$('#numpad4column tr').on('click', function(e){
+					$(this).find('.qtyInput').numpad('open');
+				});
 			});
 		</script>
 		<style type="text/css">
@@ -80,6 +84,7 @@
 			</div>
 		</form>
 		<h2>Table</h2>
+		<p>Click on a row to open the numpad for the editable cell programmatically</p>
 		<table id="numpad4column" class="table">
 			<thead>
 				<tr>

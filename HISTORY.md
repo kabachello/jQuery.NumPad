@@ -1,8 +1,11 @@
+### v1.4
+	* Added possibility to open and close the numpad programmatically: <code>$(selector).numpad('open')</code> and <code>$(selector).numpad('close')</code> 
+
 ### v1.3.1
-    * Registered the plugin in the npm repository.
+   	* Registered the plugin in the npm repository.
 
 ### v1.3
-    * Added support for negative numbers and an appropriate button.
+   	* Added support for negative numbers and an appropriate button.
 	* Added support for fractions and a corresponding decimal button.
 	* Removed the plus and minus button to save space.
 	* Fixed changing multiple elements at the same time when the numpad is used for a collection (e.g. table column).

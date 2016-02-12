@@ -9,7 +9,7 @@
  * Project home:
  * https://github.com/kabachello/jQuery.NumPad
  *
- * Version: 1.3
+ * Version: 1.4
  *
  */
 (function($){
@@ -22,19 +22,36 @@
 	}
 	
     $.fn.numpad=function(options){
+    	
+    	if (typeof options == 'string'){
+    		var nmpd = $.data(this[0], 'numpad');
+    		if (!nmpd) throw "Cannot perform '" + options + "' on a numpad prior to initialization!";
+    		switch (options){
+    			case 'open': 
+    				nmpd.open(nmpd.options.target ? nmpd.options.target : this.first());
+    				break;
+    			case 'close':
+    				nmpd.open(nmpd.options.target ? nmpd.options.target : this.first());
+    				break;
+    		}
+    		return this;
+    	} 
+    	
 		// Apply the specified options overriding the defaults
 		options = $.extend({}, $.fn.numpad.defaults, options);
 		
 		// Create a numpad. One for all elements in this jQuery selector.
 		// Since numpad() can be called on multiple elements on one page, each call will create a unique numpad id.
 		var id = 'nmpd' + ($('.nmpd-wrapper').length + 1);
+		var nmpd = {};
 		return this.each(function(){
 			
 			// If an element with the generated unique numpad id exists, the numpad had been instantiated already.
 			// Otherwise create a new one!
 			if ($('#'+id).length == 0) {
 				/** @var nmpd jQuery object containing the entire numpad */
-				var nmpd = $('<div id="' + id + '"></div>').addClass('nmpd-wrapper');
+				nmpd = $('<div id="' + id + '"></div>').addClass('nmpd-wrapper');
+				nmpd.options = options;
 				/** @var display jQuery object representing the display of the numpad (typically an input field) */
 				var display = $(options.displayTpl).addClass('nmpd-display');
 				nmpd.display = display;
@@ -121,9 +138,11 @@
 				nmpd.trigger('numpad.create');
 			} else {
 				// If the numpad was already instantiated previously, just load it into the nmpd variable
-				nmpd = $('#'+id);
-				nmpd.display = $('#'+id+' input.nmpd-display');
+				//nmpd = $('#'+id);
+				//nmpd.display = $('#'+id+' input.nmpd-display');	
 			}
+			
+			$.data(this, 'numpad', nmpd);
 			
 			// Make the target element readonly and save the numpad id in the data-numpad property. Also add the special nmpd-target CSS class.
 			$(this).attr("readonly", true).attr('data-numpad', id).addClass('nmpd-target');
@@ -162,7 +181,7 @@
 			* @return jQuery object nmpd
 			*/
 			nmpd.close = function(target){
-				// If a target element is given, set it's value to the dipslay value of the numpad. Otherwise just hid the numpad
+				// If a target element is given, set it's value to the dipslay value of the numpad. Otherwise just hide the numpad
 				if (target){
 					if (target.prop("tagName") == 'INPUT'){
 						target.val(nmpd.getValue().toString().replace('.', options.decimalSeparator));
