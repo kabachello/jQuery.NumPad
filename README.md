@@ -27,7 +27,6 @@ function($){
 ```
 
 ## TODOs & Known bugs
-- Fix scrolling to top of page if the numpad is called from somewhere in the middle
 - Fix conflicts with the locale based number formatting on input fields with type="number".
 - Add position options to place the keypad above or aside the target element
 - Make a simple calculator
