@@ -216,7 +216,7 @@
 						nmpd.display.val(target.val());
 						nmpd.display.attr('maxLength', target.attr('maxLength'));
 					} else {
-						nmpd.display.val(parseFloat(target.text()));
+						nmpd.display.val(isNaN(parseFloat(target.text())) ? '' : parseFloat(target.text()));
 					}
 				}
 				// Mark the numpad as not dirty initially
