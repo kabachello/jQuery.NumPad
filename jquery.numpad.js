@@ -9,7 +9,8 @@
  * Project home:
  * https://github.com/kabachello/jQuery.NumPad
  *
- * Version: 1.4
+ * Version: 1.5-gcode by @openhardwarecoza
+ * 
  *
  */
 (function($){
@@ -20,14 +21,14 @@
 		elem.focus();
 		window.scrollTo(x, y);
 	}
-	
+
     $.fn.numpad=function(options){
-    	
+
     	if (typeof options == 'string'){
     		var nmpd = $.data(this[0], 'numpad');
     		if (!nmpd) throw "Cannot perform '" + options + "' on a numpad prior to initialization!";
     		switch (options){
-    			case 'open': 
+    			case 'open':
     				nmpd.open(nmpd.options.target ? nmpd.options.target : this.first());
     				break;
     			case 'close':
@@ -35,17 +36,17 @@
     				break;
     		}
     		return this;
-    	} 
-    	
+    	}
+
 		// Apply the specified options overriding the defaults
 		options = $.extend({}, $.fn.numpad.defaults, options);
-		
+
 		// Create a numpad. One for all elements in this jQuery selector.
 		// Since numpad() can be called on multiple elements on one page, each call will create a unique numpad id.
 		var id = 'nmpd' + ($('.nmpd-wrapper').length + 1);
 		var nmpd = {};
 		return this.each(function(){
-			
+
 			// If an element with the generated unique numpad id exists, the numpad had been instantiated already.
 			// Otherwise create a new one!
 			if ($('#'+id).length == 0) {
@@ -60,7 +61,24 @@
 				nmpd.grid = table;
 				table.append($(options.rowTpl).append($(options.displayCellTpl).append(display).append($('<input type="hidden" class="dirty" value="0"></input>'))));
 				// Create rows and columns of the the grid with appropriate buttons
-				table.append(
+
+					if (options.gcode){
+						table.append(
+						$(options.rowTpl)
+							.append($(options.cellTpl).append($(options.buttonNumberTpl).html('G').addClass('numero')))
+							.append($(options.cellTpl).append($(options.buttonNumberTpl).html('M').addClass('numero')))
+							.append($(options.cellTpl).append($(options.buttonNumberTpl).html('S').addClass('numero')))
+							.append($(options.cellTpl).append($(options.buttonNumberTpl).html('T').addClass('numero')))
+						).append(
+						$(options.rowTpl)
+							.append($(options.cellTpl).append($(options.buttonNumberTpl).html('X').addClass('numero')))
+							.append($(options.cellTpl).append($(options.buttonNumberTpl).html('Y').addClass('numero')))
+							.append($(options.cellTpl).append($(options.buttonNumberTpl).html('Z').addClass('numero')))
+							.append($(options.cellTpl).append($(options.buttonNumberTpl).html('E').addClass('numero')))
+						)
+					}
+
+					table.append(
 					$(options.rowTpl)
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(7).addClass('numero')))
 						.append($(options.cellTpl).append($(options.buttonNumberTpl).html(8).addClass('numero')))
@@ -99,7 +117,7 @@
 				nmpd.append($(options.backgroundTpl).addClass('nmpd-overlay').click(function(){nmpd.close(false);}));
 				// Append the grid table to the nmpd element
 				nmpd.append(table);
-				
+
 				// Hide buttons to be hidden
 				if (options.hidePlusMinusButton){
 					nmpd.find('.neg').hide();
@@ -107,7 +125,7 @@
 				if (options.hideDecimalButton){
 					nmpd.find('.sep').hide();
 				}
-				
+
 				// Attach events
 				if (options.onKeypadCreate){
 					nmpd.on('numpad.create', options.onKeypadCreate);
@@ -121,8 +139,8 @@
 				if (options.onChange){
 					nmpd.on('numpad.change', options.onChange);
 				}
-				(options.appendKeypadTo ? options.appendKeypadTo : $(document.body)).append(nmpd);   
-				
+				(options.appendKeypadTo ? options.appendKeypadTo : $(document.body)).append(nmpd);
+
 				// Special event for the numeric buttons
 				$('#'+id+' .numero').bind('click', function(){
 					var val;
@@ -131,37 +149,42 @@
 					} else {
 						val = nmpd.getValue() ? nmpd.getValue().toString() + $(this).text() : $(this).text();
 					}
-					nmpd.setValue(val);	
+					nmpd.setValue(val);
 				});
-				
+
 				// Finally, once the numpad is completely instantiated, trigger numpad.create
 				nmpd.trigger('numpad.create');
 			} else {
 				// If the numpad was already instantiated previously, just load it into the nmpd variable
 				//nmpd = $('#'+id);
-				//nmpd.display = $('#'+id+' input.nmpd-display');	
+				//nmpd.display = $('#'+id+' input.nmpd-display');
 			}
-			
+
 			$.data(this, 'numpad', nmpd);
-			
+
 			// Make the target element readonly and save the numpad id in the data-numpad property. Also add the special nmpd-target CSS class.
 			$(this).attr("readonly", true).attr('data-numpad', id).addClass('nmpd-target');
-			
+
 			// Register a listener to open the numpad on the event specified in the options
 			$(this).bind(options.openOnEvent,function(){
 				nmpd.open(options.target ? options.target : $(this));
 			});
-			
+
 			// Define helper functions
-			
+
 			/**
 			* Gets the current value displayed in the numpad
 			* @return string | number
 			*/
 			nmpd.getValue = function(){
-				return isNaN(nmpd.display.val()) ? 0 : nmpd.display.val();
+				if (options.gcode){
+					return nmpd.display.val();
+				} else {
+					return isNaN(nmpd.display.val()) ? 0 : nmpd.display.val();
+				}
+
 			};
-			
+
 			/**
 			* Sets the display value of the numpad
 			* @param string value
@@ -174,7 +197,7 @@
 				nmpd.trigger('numpad.change', [value]);
 				return nmpd;
 			};
-			
+
 			/**
 			* Closes the numpad writing it's value to the given target element
 			* @param jQuery object target
@@ -188,7 +211,7 @@
 					} else {
 						target.html(nmpd.getValue().toString().replace('.', options.decimalSeparator));
 					}
-				}	
+				}
 				// Hide the numpad and trigger numpad.close
 				nmpd.hide();
 				nmpd.trigger('numpad.close');
@@ -199,7 +222,7 @@
 				}
 				return nmpd;
 			};
-			
+
 			/**
 			* Opens the numpad for a given target element optionally filling it with a given value
 			* @param jQuery object target
@@ -232,10 +255,10 @@
 				// Finally trigger numpad.open
 				nmpd.trigger('numpad.open');
 				return nmpd;
-			};		  
+			};
 		});
     };
-    
+
 	/**
 	* Positions any given jQuery element within the page
 	*/
@@ -244,7 +267,7 @@
     	var y = 0;
     	if (mode == 'fixed'){
 	        element.css('position','fixed');
-	        
+
 	        if (posX == 'left'){
 	        	x = 0;
 	        } else if (posX == 'right'){
@@ -255,7 +278,7 @@
 	        	x = posX;
 	        }
 	        element.css('left', x);
-	        	        
+
 	        if (posY == 'top'){
 	        	y = 0;
 	        } else if (posY == 'bottom'){
@@ -269,7 +292,7 @@
     	}
         return element;
     }
-	
+
 	// Default values for numpad options
 	$.fn.numpad.defaults = {
 		target: false,
