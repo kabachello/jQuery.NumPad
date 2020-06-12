@@ -31,7 +31,7 @@
     				nmpd.open(nmpd.options.target ? nmpd.options.target : this.first());
     				break;
     			case 'close':
-    				nmpd.open(nmpd.options.target ? nmpd.options.target : this.first());
+    				nmpd.close(nmpd.options.target ? nmpd.options.target : this.first());
     				break;
     		}
     		return this;
