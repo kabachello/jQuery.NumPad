@@ -13,12 +13,12 @@
 		<script type="text/javascript">
 			// Set NumPad defaults for jQuery mobile. 
 			// These defaults will be applied to all NumPads within this document!
-			$.fn.numpad.defaults.gridTpl = '<table class="ui-bar-a"></table>';
-			$.fn.numpad.defaults.backgroundTpl = '<div class="ui-popup-screen ui-overlay-a"></div>';
-			$.fn.numpad.defaults.displayTpl = '<input data-theme="b" type="text" />';
-			$.fn.numpad.defaults.buttonNumberTpl =  '<a data-role="button" data-theme="b"></a>';
-			$.fn.numpad.defaults.buttonFunctionTpl = '<a data-role="button" data-theme="a"></a>';
-			$.fn.numpad.defaults.onKeypadCreate = function(){$(this).enhanceWithin();};
+			JQueryNumpad.defaults.gridTpl = '<table class="ui-bar-a"></table>';
+			JQueryNumpad.defaults.backgroundTpl = '<div class="ui-popup-screen ui-overlay-a"></div>';
+			JQueryNumpad.defaults.displayTpl = '<input data-theme="b" type="text" />';
+			JQueryNumpad.defaults.buttonNumberTpl =  '<a data-role="button" data-theme="b"></a>';
+			JQueryNumpad.defaults.buttonFunctionTpl = '<a data-role="button" data-theme="a"></a>';
+			JQueryNumpad.defaults.onKeypadCreate = function(){$(this).enhanceWithin();};
 			
 			// Instantiate NumPad once the page is ready to be shown
 			$(document).on('pageshow', function(){
