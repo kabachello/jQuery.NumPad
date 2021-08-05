@@ -11,30 +11,35 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		<!-- jQuery.NumPad -->
-		<script src="../../jquery.numpad.js"></script>
-		<link rel="stylesheet" href="../../jquery.numpad.css">
+		<script src="file:///C:/temp/webpage_to_test_jquery_numpad/jquery.numpad.js"></script>
+		<link rel="stylesheet" href="file:///C:/temp/webpage_to_test_jquery_numpad/jquery.numpad.css">
 		<script type="text/javascript">
 			// Set NumPad defaults for jQuery mobile. 
 			// These defaults will be applied to all NumPads within this document!
-			$.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
-			$.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
-			$.fn.numpad.defaults.displayTpl = '<input type="text" class="form-control" />';
-			$.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default"></button>';
-			$.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn" style="width: 100%;"></button>';
-			$.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
+			JQueryNumpad.defaults.gridTpl = '<table class="table modal-content"></table>';
+			JQueryNumpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
+			JQueryNumpad.defaults.displayTpl = '<input type="text" class="form-control" />';
+			JQueryNumpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default"></button>';
+			JQueryNumpad.defaults.buttonFunctionTpl = '<button type="button" class="btn" style="width: 100%;"></button>';
+			JQueryNumpad.defaults.decimalSeparator = '.';
+			JQueryNumpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
 			
 			// Instantiate NumPad once the page is ready to be shown
 			$(document).ready(function(){
 				$('#text-basic').numpad();
+
 				$('#password').numpad({
 					displayTpl: '<input class="form-control" type="password" />',
 					hidePlusMinusButton: true,
 					hideDecimalButton: true	
 				});
+				
 				$('#numpadButton-btn').numpad({
 					target: $('#numpadButton')
 				});
+				
 				$('#numpad4div').numpad();
+				
 				$('#numpad4column .qtyInput').numpad();
 				
 				$('#numpad4column tr').on('click', function(e){
