@@ -265,8 +265,9 @@ class JQueryNumpad {
 
 	numpad_setValue = (value) => {
 		value = this._numpad_cutStringLengthToMaximumAllowed(value);
+		let nonnumericAllowedValues = ['', '-', this.options.decimalSeparator, `-${this.options.decimalSeparator}`];
 
-		if(!this._numpad_isValueNumeric(value) && value !== ""){
+		if(!this._numpad_isValueNumeric(value) && !nonnumericAllowedValues.includes(value)){
 			return;
 		}
 
@@ -300,13 +301,16 @@ class JQueryNumpad {
 	}
 
 	numpad_close = (target) => {
+		let finalValue = this.numpad_getValue().toString().replace('.', this.options.decimalSeparator);
+		let textToWrite = this._numpad_cutStringLengthToMaximumAllowed(finalValue)
+
 		// If a target element is given, set it's value to the dipslay value of the numpad. Otherwise just hide the numpad
 		if (target) {
 			if (target.prop("tagName") === 'INPUT') {
-				target.val(this.numpad_getValue().toString().replace('.', this.options.decimalSeparator));
+				target.val(textToWrite);
 			}
 			else {
-				target.html(this.numpad_getValue().toString().replace('.', this.options.decimalSeparator));
+				target.html(textToWrite);
 			}
 		}
 
