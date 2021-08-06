@@ -67,19 +67,19 @@
 		let numberPadElement = {};
 
 		// "this" is a jQuery selecton, which might contain many matches.
-		return this.each(function (_, target) {
+		return this.each(function (_, numpadTarget) {
 			if ($('#' + id).length === 0) {
 				numberPadElement = new JQueryNumpad(options, id);
 			}
 
-			$.data(target, 'numpad', numberPadElement);
+			$.data(numpadTarget, 'numpad', numberPadElement);
 
-			$(target).attr("readonly", true).attr('data-numpad', id).addClass('nmpd-target');
+			$(numpadTarget).attr("readonly", true).attr('data-numpad', id).addClass('nmpd-target');
 
-			$(target).bind(options.openOnEvent, function () {
+			$(numpadTarget).bind(options.openOnEvent, function () {
 				numberPadElement.numpad_open(options.target
 					? options.target
-					: $(target));
+					: $(numpadTarget));
 			});
 		});
 	};
